@@ -28,6 +28,7 @@ public class ProfileCreateService {
         Profile entity = new Profile();
         entity.setName(form.getName());
         entity.setGender(form.getGender());
+        entity.setHobby(form.getHobby());
         entity.setIntroduction(form.getIntroduction());
 
         return profileRepository.save(entity);

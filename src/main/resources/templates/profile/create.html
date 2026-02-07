@@ -24,8 +24,8 @@
 		                <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" th:errorclass="error_msg"></p>
 		                <div class="form-body">
 		                    <label for="gender" class="title">性別</label>
-		                    <label class ='gender'><input type="radio" value = "男性" th:field="*{gender}" class="input-area">男性</label>
-							<label class ='gender'><input type="radio" value = "女性" th:field="*{gender}" class="input-area">女性</label>
+		                    <label class ='gender'>男性<input type="radio" value = "男性" th:field="*{gender}" ></label>
+							<label class ='gender'>女性<input type="radio" value = "女性" th:field="*{gender}" ></label>
 		                </div>
 		            </li>
 					<li>
