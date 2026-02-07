@@ -54,11 +54,10 @@ public class ProfileController {
     private ProfileListService profileListService;
     
     @GetMapping("/profile/list")
-    public String list(@RequestParam(name = "name", required = false) String title,Model model) {
+    public String list(@RequestParam(name = "name", required = false) String name,Model model) {
 
-        List<Profile> profileList = profileListService.list(title);
-        model.addAttribute("profileList", profileList);
-        model.addAttribute("title", title);
+        List<Profile> profileList = profileListService.list(name);
+        model.addAttribute("name", name);
 
         return "profile/list";
     }

@@ -19,16 +19,16 @@ public class ProfileListService {
     @Autowired
     private ProfileRepository profileRepository;
 
-    public List<Profile> list(String title) {
+    public List<Profile> list(String name) {
 
         List<Profile> profileList = new ArrayList<>();
         
-        if (Objects.isNull(title) || title.isEmpty()) {
+        if (Objects.isNull(name) || name.isEmpty()) {
             // 一覧取得
             profileList = profileRepository.findAllByOrderById();
         } else {
             // 検索
-            profileList = profileRepository.findByTitleLike(createLikeParam(title));
+            profileList = profileRepository.findByNameLike(createLikeParam(name));
         }
 
         return profileList;

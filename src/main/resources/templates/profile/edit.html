@@ -5,27 +5,28 @@
     layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/news/edit.css}">
+    <link rel="stylesheet" th:href="@{/css/profile/edit.css}">
 </head>
 <body>
     <main layout:fragment="contents">
         <div class="wrapper">
             <h1>ニュース編集</h1>
-            <form th:action="@{/news/edit/__${news.id}__}" enctype="multipart/form-data" method="post">
+            <form th:action="@{/profile/edit/__${profile.id}__}" enctype="multipart/form-data" method="post">
                 <ul class="form-ul">
                     <li>
-                        <p th:if="${#fields.hasErrors('form.title')}" th:errors="*{form.title}" th:errorclass="error_msg"></p>
+                        <p th:if="${#fields.hasErrors('form.title')}" th:errors="*{form.name}" th:errorclass="error_msg"></p>
                         <div class="form-body">
-                            <label for="title" class="title">タイトル</label>
-                            <input type="text" class="input-area" th:value="${news.title}" name="title" />
+                            <label for="title" class="title">名前</label>
+                            <input type="text" class="input-area" th:value="${profile.name}" name="name" />
                         </div>
                     </li>
                     <li>
-                        <p th:if="${#fields.hasErrors('form.content')}" th:errors="*{form.content}" th:errorclass="error_msg"></p>
-                        <div class="form-body">
-                            <label for="content" class="title">本文</label>
-                            <textarea rows="15" class="input-area textarea" th:text="${news.content}" name="content"></textarea>
-                        </div>
+                        <p th:if="${#fields.hasErrors('form.gender')}" th:errors="*{form.gender}" th:errorclass="error_msg"></p>
+						<div class="form-body">
+							<label for="gender" class="title">性別</label>
+							<label class ='gender'>男性<input type="radio" value = "男性" th:field="*{gender}" ></label>
+							<label class ='gender'>女性<input type="radio" value = "女性" th:field="*{gender}" ></label>
+						</div>
                     </li>
                     <li>
                         <div class="form-body form-body-img">
@@ -37,7 +38,7 @@
                                 <div class="form-img-box">
                                     <p class="form-img-text u-margin_0">
                                         <span>設定中:</span>
-                                        <span th:text="${news.imageName}"></span>
+                                        <span th:text="${profile.imageName}"></span>
                                     </p>
                                 </div>
                                 <div class="flex">
@@ -53,11 +54,11 @@
                 </ul>
             </form>
             <div class="return_btn-area">
-                <a class="return_btn" th:href="@{/news/list}">一覧画面に戻る</a>
+                <a class="return_btn" th:href="@{/profile/list}">一覧画面に戻る</a>
             </div>
 			<p class="history_text">編集履歴</p>
 			<ul class="history">
-			    <li th:each="history : ${news.histories}" class="date" th:text="${#dates.format(history.editedDate, 'yyyy-MM-dd hh:mm:ss')}"></li>
+			    <li th:each="history : ${profile.histories}" class="date" th:text="${#dates.format(history.editedDate, 'yyyy-MM-dd hh:mm:ss')}"></li>
 			</ul>
         </div>
     </main>

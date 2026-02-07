@@ -10,5 +10,5 @@ import com.jutjoy.domain.entity.profile.Profile;
 @Repository
 public interface ProfileRepository extends JpaRepository<Profile, Integer> {
 	public List<Profile> findAllByOrderById();
-	public List<Profile> findByTitleLike(String name);
+	public List<Profile> findByNameLike(String name);
 }
