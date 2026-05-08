@@ -58,6 +58,8 @@ public class ProfileController {
 
         List<Profile> profileList = profileListService.list(name);
         model.addAttribute("name", name);
+        model.addAttribute("profileList", profileList);
+
 
         return "profile/list";
     }

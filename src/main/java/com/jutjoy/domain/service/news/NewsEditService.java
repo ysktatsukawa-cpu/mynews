@@ -6,17 +6,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jutjoy.domain.entity.news.News;
 import com.jutjoy.domain.entity.news.NewsHistories;
 import com.jutjoy.domain.form.NewsEditForm;
-import com.jutjoy.domain.repository.NewsHistoriesRepository;
-import com.jutjoy.domain.repository.NewsRepository;
+import com.jutjoy.domain.mapper.NewsHistoriesMapper;
+import com.jutjoy.domain.mapper.NewsMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -26,10 +25,10 @@ import lombok.AllArgsConstructor;
 public class NewsEditService {
 
     @Autowired
-    private NewsRepository newsRepository;
+    private NewsMapper newsMapper;
     
     @Autowired
-    private NewsHistoriesRepository newsHistoriesRepository;
+    private NewsHistoriesMapper newsHistoriesMapper;
 
     private final String FILE_PATH = "/upload_file/news";
 
@@ -37,7 +36,7 @@ public class NewsEditService {
 
         MultipartFile image = form.getImage();
 
-        News entity = newsRepository.findById(id).get();
+        News entity = newsMapper.selectById(id);
         String beforeImageName = entity.getImageName();
 
         // ニュース更新処理
@@ -86,7 +85,7 @@ public class NewsEditService {
     public News findNews(int id) {
 
         // ニュース、編集履歴参照
-        News news = newsRepository.findById(id).get();
+        News news = newsMapper.selectById(id);
         return news;
     }
 
@@ -107,13 +106,14 @@ public class NewsEditService {
         } else if (form.isImageRemove()) {
             entity.setImageName(null);
         }
-        return newsRepository.save(entity);
+        newsMapper.update(entity);
+        return entity;
     }
     
     private void registerHistory(Integer id) {
         NewsHistories entity = new NewsHistories();
         entity.setNewsId(id);
-        newsHistoriesRepository.save(entity);
+        newsHistoriesMapper.insert(entity);
     }
 
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jutjoy.domain.entity.news.News;
-import com.jutjoy.domain.repository.NewsRepository;
+import com.jutjoy.domain.mapper.NewsMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 public class NewsListService {
 
     @Autowired
-    private NewsRepository newsRepository;
+    private NewsMapper newsMapper;
 
     public List<News> list(String title) {
 
@@ -25,10 +25,10 @@ public class NewsListService {
         
         if (Objects.isNull(title) || title.isEmpty()) {
             // 一覧取得
-            newsList = newsRepository.findAllByOrderById();
+            newsList = newsMapper.findAllOrderById();
         } else {
             // 検索
-            newsList = newsRepository.findByTitleLike(createLikeParam(title));
+            newsList = newsMapper.findByTitleLike(createLikeParam(title));
         }
 
         return newsList;

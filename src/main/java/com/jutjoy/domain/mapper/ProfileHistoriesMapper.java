@@ -1,10 +1,15 @@
-package com.jutjoy.domain.repository;
+package com.jutjoy.domain.mapper;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import com.jutjoy.domain.entity.profile.ProfileHistories;
 
-@Repository
-public interface ProfileHistoriesRepository extends JpaRepository<ProfileHistories, Integer> {
+@Mapper
+public interface ProfileHistoriesMapper {
+
+    /**
+     * 履歴登録
+     */
+    int insert(ProfileHistories profileHistories);
+
 }

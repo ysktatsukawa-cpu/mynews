@@ -8,23 +8,26 @@ import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jutjoy.common.CommonConstant;
 import com.jutjoy.domain.entity.news.News;
 import com.jutjoy.domain.form.news.NewsCreateForm;
-import com.jutjoy.domain.repository.NewsRepository;
+import com.jutjoy.domain.mapper.NewsMapper;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
+@Transactional
 public class NewsCreateService {
 
     @Autowired
-    private NewsRepository newsRepository;
+    private NewsMapper newsMapper;
 
     public void create(NewsCreateForm newsCreateForm) {
+    	System.out.println("service start");
 
         MultipartFile image = newsCreateForm.getImage();
 
@@ -65,7 +68,8 @@ public class NewsCreateService {
         entity.setTitle(form.getTitle());
         entity.setContent(form.getContent());
         entity.setImageName(Objects.isNull(form.getImage()) ? null : form.getImage().getOriginalFilename());
-
-        return newsRepository.save(entity);
+        
+        newsMapper.insert(entity);
+        return entity;
     }
 }

@@ -14,7 +14,7 @@
             <form th:action="@{/profile/edit/__${profile.id}__}" enctype="multipart/form-data" method="post">
                 <ul class="form-ul">
                     <li>
-                        <p th:if="${#fields.hasErrors('form.title')}" th:errors="*{form.name}" th:errorclass="error_msg"></p>
+                        <p th:if="${#fields.hasErrors('form.name')}" th:errors="*{form.name}" th:errorclass="error_msg"></p>
                         <div class="form-body">
                             <label for="title" class="title">名前</label>
                             <input type="text" class="input-area" th:value="${profile.name}" name="name" />
@@ -24,30 +24,24 @@
                         <p th:if="${#fields.hasErrors('form.gender')}" th:errors="*{form.gender}" th:errorclass="error_msg"></p>
 						<div class="form-body">
 							<label for="gender" class="title">性別</label>
-							<label class ='gender'>男性<input type="radio" value = "男性" th:field="*{gender}" ></label>
-							<label class ='gender'>女性<input type="radio" value = "女性" th:field="*{gender}" ></label>
+							<label class ='gender'>男性<input type="radio" value = "男性" th:field="*{profile.gender}" ></label>
+							<label class ='gender'>女性<input type="radio" value = "女性" th:field="*{profile.gender}" ></label>
 						</div>
                     </li>
-                    <li>
-                        <div class="form-body form-body-img">
-                            <p class="u-margin_0">画像</p>
-                            <div class="form-body-inner">
-                                <div>
-                                    <input id="file" type="file" name="image" class="input-area input-area_file">
-                                </div>
-                                <div class="form-img-box">
-                                    <p class="form-img-text u-margin_0">
-                                        <span>設定中:</span>
-                                        <span th:text="${profile.imageName}"></span>
-                                    </p>
-                                </div>
-                                <div class="flex">
-                                    <input id="checkbox" type="checkbox" name="imageRemove" class="checkbox"/>
-                                    <label class="form-img-text" for="checkbox">設定中の画像を削除</label>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+					<li>
+					    <p th:if="${#fields.hasErrors('form.hobby')}" th:errors="*{form.hobby}" th:errorclass="error_msg"></p>
+					    <div class="form-body">
+					         <label for="hobby" class="title">趣味</label>
+					         <input type="text" class="input-area" th:value="${profile.hobby}" name="hobby"/>
+					    </div>
+					</li>
+					<li>
+						<p th:if="${#fields.hasErrors('form.introduction')}" th:errors="*{form.introduction}" th:errorclass="error_msg"></p>
+						<div class="form-body">
+							<label for="introduction" class="title">自己紹介</label>
+							<input type="text" class="input-area" th:value="${profile.introduction}" name="introduction" />
+						</div>
+					</li>
                     <li class="btn-area">
                         <button class="btn">更新</button>
                     </li>

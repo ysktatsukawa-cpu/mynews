@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 
-import com.jutjoy.domain.repository.NewsRepository;
+import com.jutjoy.domain.mapper.NewsMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -15,14 +15,14 @@ import lombok.AllArgsConstructor;
 public class NewsDeleteService {
 
     @Autowired
-    private NewsRepository newsRepository;
+    private NewsMapper newsMapper;
 
     private final String FILE_PATH = "/upload_file/news";
 
     public void delete(Integer id) {
 
         // ニュース削除処理
-        newsRepository.deleteById(id);
+    	newsMapper.delete(id);
 
         // フォルダ・画像削除
         String dirPath = FILE_PATH + File.separator + id;

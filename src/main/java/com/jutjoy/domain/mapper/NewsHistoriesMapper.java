@@ -1,10 +1,14 @@
-package com.jutjoy.domain.repository;
+package com.jutjoy.domain.mapper;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import com.jutjoy.domain.entity.news.NewsHistories;
 
-@Repository
-public interface NewsHistoriesRepository extends JpaRepository<NewsHistories, Integer> {
+@Mapper
+public interface NewsHistoriesMapper {
+
+    /**
+     * 履歴登録
+     */
+    int insert(NewsHistories newsHistories);
 }
