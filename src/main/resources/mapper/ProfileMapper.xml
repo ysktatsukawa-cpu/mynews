@@ -24,7 +24,8 @@
                 property="updatedDate"
                 jdbcType="TIMESTAMP"
                 javaType="java.sql.Timestamp" />
-    </resultMap>
+                
+     </resultMap>
 
 
     <!-- 一覧取得 -->
@@ -89,26 +90,6 @@
             id = #{id}
 
     </select>
-
-
-    <!-- 履歴一覧取得 -->
-    <select id="findByProfileId"
-            parameterType="int"
-            resultType="com.jutjoy.domain.entity.profile.ProfileHistories">
-
-        SELECT
-            id,
-            profile_id AS profileId,
-            edited_date AS editedDate
-        FROM
-            profile_histories
-        WHERE
-            profile_id = #{id}
-        ORDER BY
-            edited_date DESC
-
-    </select>
-
 
     <!-- 登録 -->
     <insert id="insert"

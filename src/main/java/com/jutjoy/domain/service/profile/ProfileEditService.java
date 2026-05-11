@@ -36,9 +36,9 @@ public class ProfileEditService {
 
     public Profile findProfile(int id) {
 
-        // プロフィール、編集履歴参照
+        // プロフィール編集履歴参照
         Profile profile = ProfileMapper.selectById(id);
-        ProfileMapper.findByProfileId(id);
+        profile.setHistories(ProfileHistoriesMapper.findByProfileId(id));
         
         return profile;
     }
