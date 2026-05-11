@@ -6,129 +6,163 @@
 
 <mapper namespace="com.jutjoy.domain.mapper.ProfileMapper">
 
-	<!-- 一覧取得 -->
-	<select id="findAllOrderById"
-		resultType="com.jutjoy.domain.entity.profile.Profile">
+    <!-- Profile用 resultMap -->
+    <resultMap id="profileResultMap" type="com.jutjoy.domain.entity.profile.Profile">
+        <id column="id" property="id" />
 
-		SELECT
-		id,
-		name,
-		gender,
-		hobby,
-		introduction,
-		registered_date AS registeredDate,
-		updated_date AS updatedDate
-		FROM
-		profile
-		ORDER BY
-		id
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="hobby" property="hobby" />
+        <result column="introduction" property="introduction" />
 
-	</select>
+        <result column="registered_date"
+                property="registeredDate"
+                jdbcType="TIMESTAMP"
+                javaType="java.sql.Timestamp" />
 
-	<!-- 履歴一覧取得 -->
-	<select id="findByProfileId" parameterType="int"
-		resultType="com.jutjoy.domain.entity.profile.Profile">
-
-		SELECT
-		edited_date AS editedDate
-		FROM
-		profile_histories
-		WHERE
-		PROFILE_ID = #{id}
-
-	</select>
+        <result column="updated_date"
+                property="updatedDate"
+                jdbcType="TIMESTAMP"
+                javaType="java.sql.Timestamp" />
+    </resultMap>
 
 
-	<!-- 名前検索 -->
-	<select id="findByNameLike" parameterType="String"
-		resultType="com.jutjoy.domain.entity.profile.Profile">
+    <!-- 一覧取得 -->
+    <select id="findAllOrderById"
+            resultMap="profileResultMap">
 
-		SELECT
-		id,
-		name,
-		gender,
-		hobby,
-		introduction,
-		registered_date AS registeredDate,
-		updated_date AS updatedDate
-		FROM
-		profile
-		WHERE
-		name LIKE #{name}
-		ORDER BY
-		id
+        SELECT
+            id,
+            name,
+            gender,
+            hobby,
+            introduction,
+            registered_date,
+            updated_date
+        FROM
+            profile
+        ORDER BY
+            id
 
-	</select>
+    </select>
 
-	<!-- ID検索 -->
-	<select id="selectById" parameterType="int"
-		resultType="com.jutjoy.domain.entity.profile.Profile">
 
-		SELECT
-		ID,
-		NAME,
-		GENDER,
-		HOBBY,
-		INTRODUCTION,
-		REGISTERED_DATE AS
-		REGISTEREDDATE,
-		UPDATED_DATE AS UPDATEDDATE
-		FROM
-		PROFILE
-		WHERE
-		ID = #{id}
+    <!-- 名前検索 -->
+    <select id="findByNameLike"
+            parameterType="String"
+            resultMap="profileResultMap">
 
-	</select>
+        SELECT
+            id,
+            name,
+            gender,
+            hobby,
+            introduction,
+            registered_date,
+            updated_date
+        FROM
+            profile
+        WHERE
+            name LIKE #{name}
+        ORDER BY
+            id
 
-	<!-- 登録 -->
-	<insert id="insert"
-		parameterType="com.jutjoy.domain.entity.profile.Profile"
-		useGeneratedKeys="true" keyProperty="id">
+    </select>
 
-		INSERT INTO profile (
-		name,
-		gender,
-		hobby,
-		introduction,
-		registered_date,
-		updated_date
-		)
-		VALUES (
-		#{name},
-		#{gender},
-		#{hobby},
-		#{introduction},
-		CURRENT_TIMESTAMP,
-		CURRENT_TIMESTAMP
-		)
 
-	</insert>
+    <!-- ID検索 -->
+    <select id="selectById"
+            parameterType="int"
+            resultMap="profileResultMap">
 
-	<!-- 更新 -->
-	<update id="update"
-		parameterType="com.jutjoy.domain.entity.profile.Profile">
+        SELECT
+            id,
+            name,
+            gender,
+            hobby,
+            introduction,
+            registered_date,
+            updated_date
+        FROM
+            profile
+        WHERE
+            id = #{id}
 
-		UPDATE
-		profile
-		SET
-		name = #{name},
-		gender = #{gender},
-		hobby = #{hobby},
-		introduction = #{introduction},
-		updated_date = CURRENT_TIMESTAMP
-		WHERE
-		id = #{id}
+    </select>
 
-	</update>
 
-	<!-- 削除 -->
-	<delete id="delete" parameterType="int">
+    <!-- 履歴一覧取得 -->
+    <select id="findByProfileId"
+            parameterType="int"
+            resultType="com.jutjoy.domain.entity.profile.ProfileHistories">
 
-		DELETE FROM
-		profile
-		WHERE
-		id = #{id}
+        SELECT
+            id,
+            profile_id AS profileId,
+            edited_date AS editedDate
+        FROM
+            profile_histories
+        WHERE
+            profile_id = #{id}
+        ORDER BY
+            edited_date DESC
 
-	</delete>
+    </select>
+
+
+    <!-- 登録 -->
+    <insert id="insert"
+            parameterType="com.jutjoy.domain.entity.profile.Profile"
+            useGeneratedKeys="true"
+            keyProperty="id">
+
+        INSERT INTO profile (
+            name,
+            gender,
+            hobby,
+            introduction,
+            registered_date,
+            updated_date
+        )
+        VALUES (
+            #{name},
+            #{gender},
+            #{hobby},
+            #{introduction},
+            CURRENT_TIMESTAMP,
+            CURRENT_TIMESTAMP
+        )
+
+    </insert>
+
+
+    <!-- 更新 -->
+    <update id="update"
+            parameterType="com.jutjoy.domain.entity.profile.Profile">
+
+        UPDATE
+            profile
+        SET
+            name = #{name},
+            gender = #{gender},
+            hobby = #{hobby},
+            introduction = #{introduction},
+            updated_date = CURRENT_TIMESTAMP
+        WHERE
+            id = #{id}
+
+    </update>
+
+
+    <!-- 削除 -->
+    <delete id="delete"
+            parameterType="int">
+
+        DELETE FROM
+            profile
+        WHERE
+            id = #{id}
+
+    </delete>
 
 </mapper>
