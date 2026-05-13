@@ -56,5 +56,16 @@
         )
 
     </insert>
+    
+    <!-- 履歴削除 -->
+    <delete id="deleteHistory"
+            parameterType="int">
+
+        DELETE FROM
+            profile_histories
+        WHERE
+            profile_id = #{id}
+
+    </delete>
 
 </mapper>

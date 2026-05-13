@@ -3,6 +3,7 @@ package com.jutjoy.domain.service.profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jutjoy.domain.mapper.ProfileHistoriesMapper;
 import com.jutjoy.domain.mapper.ProfileMapper;
 
 import lombok.AllArgsConstructor;
@@ -13,10 +14,14 @@ public class ProfileDeleteService {
 
     @Autowired
     private ProfileMapper ProfileMapper;
+    @Autowired
+    private ProfileHistoriesMapper ProfileHistoriesMapper;
+
 
     public void delete(Integer id) {
 
         // 自己紹介削除処理
+    	ProfileHistoriesMapper.deleteHistory(id);
     	ProfileMapper.delete(id);
 
         }

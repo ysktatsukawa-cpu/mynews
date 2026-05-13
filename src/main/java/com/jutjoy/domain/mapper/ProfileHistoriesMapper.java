@@ -20,5 +20,11 @@ public interface ProfileHistoriesMapper {
      * 履歴一覧
      */
     List<ProfileHistories> findByProfileId(@Param("id") Integer id);
+    
+    
+    /**
+     * 履歴削除
+     */
+    int deleteHistory(@Param("id") Integer id);
 
 }
