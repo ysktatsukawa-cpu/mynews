@@ -84,8 +84,10 @@ public class NewsEditService {
 
     public News findNews(int id) {
 
-        // ニュース、編集履歴参照
+        // ニュース編集履歴参照
         News news = newsMapper.selectById(id);
+        news.setHistories(newsHistoriesMapper.findByNewsId(id));
+        
         return news;
     }
 

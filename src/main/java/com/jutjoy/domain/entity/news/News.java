@@ -1,6 +1,7 @@
 package com.jutjoy.domain.entity.news;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
@@ -18,4 +19,6 @@ public class News {
     private Timestamp registeredDate;
 
     private Timestamp updatedDate;
+    
+    private List<NewsHistories> histories;
 }

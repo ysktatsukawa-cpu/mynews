@@ -6,6 +6,39 @@
 
 <mapper namespace="com.jutjoy.domain.mapper.NewsHistoriesMapper">
 
+
+	<resultMap id="newsResultMap" type="com.jutjoy.domain.entity.news.NewsHistories">
+    	<id column="id" property="id" />
+    
+    	<id column="news_id" property="newsId" />
+    	
+    	<result column="edited_date"
+                property="editedDate"
+                jdbcType="TIMESTAMP"
+                javaType="java.sql.Timestamp" />
+        
+    </resultMap>
+    
+    
+    
+     <!-- 履歴一覧取得 -->
+    <select id="findByNewsId"
+            parameterType="int"
+            resultMap="newsResultMap">
+
+        SELECT
+            id,
+            news_id,
+            edited_date
+        FROM
+            news_histories
+        WHERE
+            news_id = #{id}
+        ORDER BY
+            edited_date DESC
+
+    </select>
+
     <!-- 履歴登録 -->
     <insert id="insert"
             parameterType="com.jutjoy.domain.entity.news.NewsHistories"
@@ -22,5 +55,17 @@
         )
 
     </insert>
+    
+    
+    <!-- 履歴削除 -->
+    <delete id="deleteHistory"
+            parameterType="int">
+
+        DELETE FROM
+            news_histories
+        WHERE
+            news_id = #{id}
+
+    </delete>
 
 </mapper>

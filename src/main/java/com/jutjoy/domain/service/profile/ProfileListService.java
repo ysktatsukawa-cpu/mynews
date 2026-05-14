@@ -20,7 +20,6 @@ public class ProfileListService {
     private ProfileMapper ProfileMapper;
 
     public List<Profile> list(String name) {
-    	System.out.println(ProfileMapper.findAllOrderById());
 
         List<Profile> profileList = new ArrayList<>();
         
