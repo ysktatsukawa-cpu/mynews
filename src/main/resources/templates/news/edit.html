@@ -28,6 +28,7 @@
                         </div>
                     </li>
                     <li>
+						<p th:if="${#fields.hasErrors('form.image')}" th:errors="*{form.image}" th:errorclass="error_msg"></p>
                         <div class="form-body form-body-img">
                             <p class="u-margin_0">画像</p>
                             <div class="form-body-inner">

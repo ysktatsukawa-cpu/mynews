@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.jutjoy.domain.entity.profile.Profile;
 import com.jutjoy.domain.form.profile.ProfileCreateForm;
-import com.jutjoy.domain.repository.ProfileRepository;
+import com.jutjoy.domain.mapper.ProfileMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 public class ProfileCreateService {
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileMapper ProfileMapper;
 
     public void create(ProfileCreateForm form) {
 
@@ -31,6 +31,7 @@ public class ProfileCreateService {
         entity.setHobby(form.getHobby());
         entity.setIntroduction(form.getIntroduction());
 
-        return profileRepository.save(entity);
+        ProfileMapper.insert(entity);
+        return entity;
     }
 }

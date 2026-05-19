@@ -28,6 +28,7 @@
 		                </div>
 		            </li>
 		            <li>
+						<p th:if="${#fields.hasErrors('image')}" th:errors="*{image}" th:errorclass="error_msg"></p>
 		                <div class="form-body">
 		                    <label for="file" class="title">画像</label>
 		                    <input type="file" th:field="*{image}" class="input-area input-area_file" />

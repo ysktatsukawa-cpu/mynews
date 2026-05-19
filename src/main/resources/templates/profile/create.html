@@ -29,10 +29,10 @@
 		                </div>
 		            </li>
 					<li>
-						<p th:if="${#fields.hasErrors('hobby')}" th:errors="*{gender}" th:errorclass="error_msg"></p>
+						<p th:if="${#fields.hasErrors('hobby')}" th:errors="*{hobby}" th:errorclass="error_msg"></p>
 						<div class="form-body">
 							<label for="hobby" class="title">趣味</label>
-							<input type="text" th:field="*{introduction}" class="input-area" />
+							<input type="text" th:field="*{hobby}" class="input-area" />
 						</div>
 					</li>
 		            <li>
