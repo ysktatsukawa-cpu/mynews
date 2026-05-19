@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jutjoy.domain.entity.profile.Profile;
-import com.jutjoy.domain.repository.ProfileRepository;
+import com.jutjoy.domain.mapper.ProfileMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 public class ProfileListService {
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileMapper ProfileMapper;
 
     public List<Profile> list(String name) {
 
@@ -25,10 +25,10 @@ public class ProfileListService {
         
         if (Objects.isNull(name) || name.isEmpty()) {
             // 一覧取得
-            profileList = profileRepository.findAllByOrderById();
+            profileList = ProfileMapper.findAllOrderById();
         } else {
             // 検索
-            profileList = profileRepository.findByNameLike(createLikeParam(name));
+            profileList = ProfileMapper.findByNameLike(createLikeParam(name));
         }
 
         return profileList;

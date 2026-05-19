@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jutjoy.domain.mapper.ProfileHistoriesMapper">
+    
+    <resultMap id="profileResultMap" type="com.jutjoy.domain.entity.profile.ProfileHistories">
+    	<id column="id" property="id" />
+    
+    	<id column="profile_id" property="profileId" />
+    	
+    	<result column="edited_date"
+                property="editedDate"
+                jdbcType="TIMESTAMP"
+                javaType="java.sql.Timestamp" />
+        
+    </resultMap>
+    
+    
+    
+     <!-- 履歴一覧取得 -->
+    <select id="findByProfileId"
+            parameterType="int"
+            resultMap="profileResultMap">
+
+        SELECT
+            id,
+            profile_id,
+            edited_date
+        FROM
+            profile_histories
+        WHERE
+            profile_id = #{id}
+        ORDER BY
+            edited_date DESC
+
+    </select>
+
+
+
+    <!-- 履歴登録 -->
+    <insert id="insert"
+            parameterType="com.jutjoy.domain.entity.profile.ProfileHistories"
+            useGeneratedKeys="true"
+            keyProperty="id">
+
+        INSERT INTO profile_histories (
+            profile_id,
+            edited_date
+        )
+        VALUES (
+            #{profileId},
+            CURRENT_TIMESTAMP
+        )
+
+    </insert>
+    
+    <!-- 履歴削除 -->
+    <delete id="deleteHistory"
+            parameterType="int">
+
+        DELETE FROM
+            profile_histories
+        WHERE
+            profile_id = #{id}
+
+    </delete>
+
+</mapper>

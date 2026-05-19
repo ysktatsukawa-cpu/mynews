@@ -1,15 +1,14 @@
 package com.jutjoy.domain.service.profile;
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jutjoy.domain.entity.profile.Profile;
 import com.jutjoy.domain.entity.profile.ProfileHistories;
 import com.jutjoy.domain.form.ProfileEditForm;
-import com.jutjoy.domain.repository.ProfileHistoriesRepository;
-import com.jutjoy.domain.repository.ProfileRepository;
+import com.jutjoy.domain.mapper.ProfileHistoriesMapper;
+import com.jutjoy.domain.mapper.ProfileMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -19,14 +18,14 @@ import lombok.AllArgsConstructor;
 public class ProfileEditService {
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileMapper ProfileMapper;
     
     @Autowired
-    private ProfileHistoriesRepository profileHistoriesRepository;
+    private ProfileHistoriesMapper ProfileHistoriesMapper;
 
     public void edit(int id, ProfileEditForm form) {;
 
-        Profile entity = profileRepository.findById(id).get();
+        Profile entity = ProfileMapper.selectById(id);
 
         // ニュース更新処理
         Profile profile = editProfile(entity, form);
@@ -37,8 +36,10 @@ public class ProfileEditService {
 
     public Profile findProfile(int id) {
 
-        // ニュース、編集履歴参照
-        Profile profile = profileRepository.findById(id).get();
+        // プロフィール編集履歴参照
+        Profile profile = ProfileMapper.selectById(id);
+        profile.setHistories(ProfileHistoriesMapper.findByProfileId(id));
+        
         return profile;
     }
 
@@ -49,13 +50,14 @@ public class ProfileEditService {
         entity.setHobby(form.getHobby());
         entity.setIntroduction(form.getIntroduction());
         
-        return profileRepository.save(entity);
+        ProfileMapper.update(entity);
+        return entity;
     }
     
     private void registerHistory(Integer id) {
         ProfileHistories entity = new ProfileHistories();
         entity.setProfileId(id);
-        profileHistoriesRepository.save(entity);
+        ProfileHistoriesMapper.insert(entity);
     }
 
 }

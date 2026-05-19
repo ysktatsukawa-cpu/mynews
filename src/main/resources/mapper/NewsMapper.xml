@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jutjoy.domain.mapper.NewsMapper">
+
+    <!-- 一覧取得 -->
+    <select id="findAllOrderById"
+            resultType="com.jutjoy.domain.entity.news.News">
+
+        SELECT
+            id,
+            title,
+            content,
+            image_name AS imageName,
+            registered_date AS registeredDate,
+            updated_date AS updatedDate
+        FROM
+            news
+        ORDER BY
+            id
+
+    </select>
+
+    <!-- タイトル検索 -->
+    <select id="findByTitleLike"
+            parameterType="String"
+            resultType="com.jutjoy.domain.entity.news.News">
+
+        SELECT
+            id,
+            title,
+            content,
+            image_name AS imageName,
+            registered_date AS registeredDate,
+            updated_date AS updatedDate
+        FROM
+            news
+        WHERE
+            title LIKE #{title}
+        ORDER BY
+            id
+
+    </select>
+
+    <!-- ID検索 -->
+    <select id="selectById"
+            parameterType="int"
+            resultType="com.jutjoy.domain.entity.news.News">
+
+        SELECT
+            id,
+            title,
+            content,
+            image_name AS imageName,
+            registered_date AS registeredDate,
+            updated_date AS updatedDate
+        FROM
+            news
+        WHERE
+            id = #{id}
+
+    </select>
+
+    <!-- 登録 -->
+    <insert id="insert"
+            parameterType="com.jutjoy.domain.entity.news.News"
+            useGeneratedKeys="true"
+            keyProperty="id">
+
+        INSERT INTO news (
+            title,
+            content,
+            image_name,
+            registered_date,
+            updated_date
+        )
+        VALUES (
+            #{title},
+            #{content},
+            #{imageName},
+            CURRENT_TIMESTAMP,
+            CURRENT_TIMESTAMP
+        )
+
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update"
+            parameterType="com.jutjoy.domain.entity.news.News">
+
+        UPDATE news
+        SET
+            title = #{title},
+            content = #{content},
+            image_name = #{imageName},
+            updated_date = CURRENT_TIMESTAMP
+        WHERE
+            id = #{id}
+
+    </update>
+
+    <!-- 削除 -->
+    <delete id="delete"
+            parameterType="int">
+
+        DELETE FROM news
+        WHERE id = #{id}
+
+    </delete>
+
+</mapper>

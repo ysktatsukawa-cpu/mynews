@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jutjoy.domain.entity.news.News;
 import com.jutjoy.domain.form.NewsEditForm;
@@ -36,6 +37,22 @@ public class NewsController {
     @PostMapping("/news/create")
     public String create(@Validated @ModelAttribute("form") NewsCreateForm newsCreateForm,
             BindingResult result, Model model) {
+    	
+    	MultipartFile image = newsCreateForm.getImage();
+    	
+    	// 500MBチェック
+    	if (image != null
+    	        && image.getSize()
+    	           > 500 * 1024 * 1024) {
+
+    		result.rejectValue(
+    			    "image",
+    			    null,
+    			    "＊ファイルサイズは500MB以下にしてください。"
+    			);
+
+    	    return "news/create";
+    	}
 
         if (result.hasErrors()) {
             return "news/create";
@@ -81,6 +98,21 @@ public class NewsController {
     public String edit(@PathVariable(name = "id") int id,
             @Validated @ModelAttribute("form") NewsEditForm newsEditForm, BindingResult result,
             Model model) {
+    	MultipartFile image = newsEditForm.getImage();
+    	
+    	// 500MBチェック
+    	if (image != null
+    	        && image.getSize()
+    	           > 500 * 1024 * 1024) {
+
+    		result.rejectValue(
+    		        "image",
+    		        null,
+    		        "ファイルサイズは500MB以下にしてください。"
+    		    );
+
+    	    return edit(newsEditForm, id, model);
+    	}
 
         if (result.hasErrors()) {
             return edit(newsEditForm, id, model);
